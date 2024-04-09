@@ -83,7 +83,7 @@ def get_front_month_column(trade_date, roll_day):
 
 def get_next_month_abbr(date_obj):
     # Add one month to the date
-    next_month_obj = date_obj + relativedelta(months=1)
+    next_month_obj = date_obj + timedelta(days=30)
     
     # Return the abbreviated month name
     return next_month_obj.strftime("%b")
