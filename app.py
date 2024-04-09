@@ -10,7 +10,6 @@ from plotly.subplots import make_subplots
 from scipy.stats import norm
 from scipy.optimize import brentq
 from scipy.optimize import fsolve
-from dateutil.relativedelta import relativedelta
 
 # Functions
 def black_scholes(S, K, T, r, sigma, option_type="call"):
