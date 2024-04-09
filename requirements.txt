@@ -4,4 +4,3 @@ plotly
 datetime
 numpy
 scipy
-dateutil
