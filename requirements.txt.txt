@@ -1,7 +1,0 @@
-streamlit
-pandas
-plotly
-datetime
-numpy
-scipy
-dateutil
