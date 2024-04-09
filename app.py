@@ -368,7 +368,7 @@ def plot_pnl(res):
     # Customize the layout
     fig.update_layout(
         xaxis_title='Date',
-        yaxis_title='Cum_Dollar_PnL',
+        yaxis_title='Total PnL',
         xaxis=dict(
             rangeselector=dict(
                 buttons=list([
