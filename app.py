@@ -306,6 +306,7 @@ tab1, tab2 = st.tabs(['Single Strategy', 'Strategies Comparison'])
 with tab1:
     if run:
         res_df = backtesting_vix_ls(short_contract=short_contract, long_contract=long_contract, multiplier=multiplier, start_date = start_date, end_date = end_date)
+        res_df.to_csv('results.csv')
         fig1 = plot_pnl(df = res_df, short_contract=short_contract, long_contract=long_contract, multiplier=multiplier, start_date=start_date, end_date=end_date)
         perf_year = performance_summary_by_year(df = res_df)
         perf_all = performance_summary_full_period(df = res_df, risk_free_rate = 0)
