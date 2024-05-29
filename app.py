@@ -220,7 +220,7 @@ def performance_summary_full_period(df, risk_free_rate=0.0):
     total_return = (df['NAV'].iloc[-1] / df['NAV'].iloc[0]) - 1
 
     # Calculate the annualized return
-    n_years = (df.index[-1] - df.index[0]).days / 252
+    n_years = (df.index[-1] - df.index[0]).days / 365
     annualized_return = (1 + total_return) ** (1 / n_years) - 1
 
     # Calculate the annualized volatility
