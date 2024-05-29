@@ -49,6 +49,10 @@ def backtesting_vix_ls(short_contract, long_contract, multiplier, start_date, en
 
     for _, row in filtered_df.iterrows():
         if row['Date'] in roll_dates:
+            current_roll_date = row['Date']
+            date_index = roll_dates.index(current_roll_date)
+            next_date = expiration_dates[date_index]
+
             # entry condition filter
             if 1 > 0:  # placeholder for entry condition
                 short_notl = row[get_next_item(short_contract)] * 100 * -1000
@@ -67,10 +71,17 @@ def backtesting_vix_ls(short_contract, long_contract, multiplier, start_date, en
                 short_notl = long_notl = short_price = long_price = daily_return = 0
                 position = False
         elif position:  # not roll date but have position
-            short_notl = row[short_contract] * 100 * -1000
-            short_price = res_df['Short_Price'].iloc[-1]
-            long_notl = row[long_contract] * 100 * 1000 * multiplier
-            long_price = res_df['Long_Price'].iloc[-1]
+            # check if today is between roll date and price switch date
+            if current_roll_date < row['Date'] <= next_date:
+                short_notl = row[get_next_item(short_contract)] * 100 * -1000
+                short_price = row[get_next_item(short_contract)]
+                long_notl = row[get_next_item(long_contract)] * 100 * 1000 * multiplier
+                long_price = row[get_next_item(long_contract)]
+            else:
+                short_notl = row[short_contract] * 100 * -1000
+                short_price = res_df['Short_Price'].iloc[-1]
+                long_notl = row[long_contract] * 100 * 1000 * multiplier
+                long_price = res_df['Long_Price'].iloc[-1]
             daily_return = short_notl + long_notl - (res_df['Short_Notl'].iloc[-1] + res_df['Long_Notl'].iloc[-1])
         else:  # not roll date and have no position
             short_notl = long_notl = short_price = long_price = daily_return = 0
@@ -84,7 +95,6 @@ def backtesting_vix_ls(short_contract, long_contract, multiplier, start_date, en
             long_notl,
             daily_return
         ]
-
     
     res_df['Cumulative_PnL'] = res_df['Daily_Return'].cumsum()
     res_df['NAV'] = 1000000 + res_df['Cumulative_PnL']
@@ -306,7 +316,6 @@ tab1, tab2 = st.tabs(['Single Strategy', 'Strategies Comparison'])
 with tab1:
     if run:
         res_df = backtesting_vix_ls(short_contract=short_contract, long_contract=long_contract, multiplier=multiplier, start_date = start_date, end_date = end_date)
-        res_df.to_csv('results.csv')
         fig1 = plot_pnl(df = res_df, short_contract=short_contract, long_contract=long_contract, multiplier=multiplier, start_date=start_date, end_date=end_date)
         perf_year = performance_summary_by_year(df = res_df)
         perf_all = performance_summary_full_period(df = res_df, risk_free_rate = 0)
