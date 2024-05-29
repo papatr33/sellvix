@@ -120,16 +120,12 @@ def backtesting_vix_ls(short_contract, long_contract, multiplier, start_date, en
     return res_df
 
 def plot_pnl(df, short_contract, long_contract, multiplier, start_date, end_date):
-    fig = go.Figure()
+    fig = px.area(df, x = 'Date', y = 'Cumulative_PnL')
     fig.update_xaxes(showgrid=True)
     fig.update_yaxes(showgrid=True)
     
     start_date = start_date.strftime("%d-%b-%Y")
     end_date = end_date.strftime("%d-%b-%Y")
-    # Add a trace for the cumulative PnL data
-    fig.add_trace(go.Scatter(x=df['Date'], y=df['Cumulative_PnL'], mode='lines', 
-                             name=f'Cumulative PnL of short 1x {short_contract} and long {multiplier}x {long_contract}, from {start_date} to {end_date}'))
-
     # Set plot layout
     fig.update_layout(
         xaxis=dict(
@@ -146,34 +142,7 @@ def plot_pnl(df, short_contract, long_contract, multiplier, start_date, end_date
     # Show the figure
     return fig
 
-def plot_pnls(df1, df2=None, df3=None, df4=None, df5=None):
-    fig = go.Figure()
 
-    # Add a trace for the cumulative PnL data of the first DataFrame (mandatory)
-    fig.add_trace(go.Scatter(x=df1['Date'], y=df1['Cumulative_PnL'], mode='lines', name='Cumulative PnL 1'))
-
-    # Add traces for the optional DataFrames if provided
-    if df2 is not None:
-        fig.add_trace(go.Scatter(x=df2['Date'], y=df2['Cumulative_PnL'], mode='lines', name='Cumulative PnL 2'))
-
-    if df3 is not None:
-        fig.add_trace(go.Scatter(x=df3['Date'], y=df3['Cumulative_PnL'], mode='lines', name='Cumulative PnL 3'))
-
-    if df4 is not None:
-        fig.add_trace(go.Scatter(x=df4['Date'], y=df4['Cumulative_PnL'], mode='lines', name='Cumulative PnL 4'))
-
-    if df5 is not None:
-        fig.add_trace(go.Scatter(x=df5['Date'], y=df5['Cumulative_PnL'], mode='lines', name='Cumulative PnL 5'))
-
-    # Set plot layout
-    fig.update_layout(
-        title='Cumulative PnL Comparison',
-        xaxis_title='Date',
-        yaxis_title='Cumulative PnL'    
-    )
-
-    # Show the figure
-    return fig
 
 def performance_summary_by_year(df):
 
@@ -328,6 +297,13 @@ with tab1:
             end_date = pd.to_datetime(end_date)
         filtered_df = df[(df['Date'] >= start_date) & (df['Date'] <= end_date)]
         fig_vix = px.line(filtered_df, x = 'Date', y = 'VIX_Spot', title = 'VIX Spot')
+        fig_vix.update_layout(
+            xaxis=dict(
+            zeroline=True,
+            zerolinewidth=10,
+            zerolinecolor='black',
+            showgrid=True
+            ))
         st.plotly_chart(fig_vix, use_container_width=True)
 
 
