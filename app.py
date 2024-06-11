@@ -440,27 +440,27 @@ with tab2:
         my_bar = st.progress(0, text=progress_text)
         percent_complete = 0
 
-        res_df_1 = backtesting_vix_ls(short_contract=short_contract, long_contract=long_contract, multiplier=multiplier, start_date=start_date, end_date=end_date, carry_threshold=carry_threshold, spread_threshold=spread_threshold, stop_loss=stop_loss)
+        res_df_1 = backtesting_vix_ls(short_contract=short_contract, long_contract=long_contract, multiplier=0, start_date=start_date, end_date=end_date, carry_threshold=carry_threshold, spread_threshold=spread_threshold, stop_loss=stop_loss)
         comp_df['Pure_short_UX1'] = res_df_1['Cumulative_PnL']
         my_bar.progress(percent_complete + 20, text=progress_text)
         percent_complete += 20
 
-        res_df_2 =  backtesting_vix_ls(short_contract=short_contract, long_contract=long_contract, multiplier=multiplier, start_date=start_date, end_date=end_date, carry_threshold=carry_threshold, spread_threshold=spread_threshold, stop_loss=stop_loss)
+        res_df_2 =  backtesting_vix_ls(short_contract=short_contract, long_contract=long_contract, multiplier=0.5, start_date=start_date, end_date=end_date, carry_threshold=carry_threshold, spread_threshold=spread_threshold, stop_loss=stop_loss)
         comp_df['Short 1x Long 0.5x'] = res_df_2['Cumulative_PnL']
         my_bar.progress(percent_complete + 20, text=progress_text)
         percent_complete += 20
         
-        res_df_3 =  backtesting_vix_ls(short_contract=short_contract, long_contract=long_contract, multiplier=multiplier, start_date=start_date, end_date=end_date, carry_threshold=carry_threshold, spread_threshold=spread_threshold, stop_loss=stop_loss)
+        res_df_3 =  backtesting_vix_ls(short_contract=short_contract, long_contract=long_contract, multiplier=1, start_date=start_date, end_date=end_date, carry_threshold=carry_threshold, spread_threshold=spread_threshold, stop_loss=stop_loss)
         comp_df['Short 1x Long 1x'] = res_df_3['Cumulative_PnL']
         my_bar.progress(percent_complete + 20, text=progress_text)
         percent_complete += 20
 
-        res_df_4 =  backtesting_vix_ls(short_contract=short_contract, long_contract=long_contract, multiplier=multiplier, start_date=start_date, end_date=end_date, carry_threshold=carry_threshold, spread_threshold=spread_threshold, stop_loss=stop_loss)
+        res_df_4 =  backtesting_vix_ls(short_contract=short_contract, long_contract=long_contract, multiplier=1.5, start_date=start_date, end_date=end_date, carry_threshold=carry_threshold, spread_threshold=spread_threshold, stop_loss=stop_loss)
         comp_df['Short 1x Long 1.5x'] = res_df_4['Cumulative_PnL']
         my_bar.progress(percent_complete + 20, text=progress_text)
         percent_complete += 20
 
-        res_df_5 =  backtesting_vix_ls(short_contract=short_contract, long_contract=long_contract, multiplier=multiplier, start_date=start_date, end_date=end_date, carry_threshold=carry_threshold, spread_threshold=spread_threshold, stop_loss=stop_loss)
+        res_df_5 =  backtesting_vix_ls(short_contract=short_contract, long_contract=long_contract, multiplier=2, start_date=start_date, end_date=end_date, carry_threshold=carry_threshold, spread_threshold=spread_threshold, stop_loss=stop_loss)
         comp_df['Short 1x Long 2x'] = res_df_5['Cumulative_PnL']
         my_bar.progress(percent_complete + 20, text=progress_text)
         percent_complete += 20
